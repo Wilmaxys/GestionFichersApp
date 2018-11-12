@@ -24,7 +24,7 @@
                 </MenuItem>
                 <MenuItem Header="Modules">
                     <MenuItem Header="Fichiers"></MenuItem>
-                    <MenuItem Header="Personnes"></MenuItem>
+                    <MenuItem Header="Personnes" x:Name="ButtonModulepersonne" Click="ButtonModulepersonne_Click"></MenuItem>
                     <MenuItem Header="Types de fichiers" x:Name="ButonModuleType" Click="ButonModuleType_Click"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="?">

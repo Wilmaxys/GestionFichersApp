@@ -45,6 +45,19 @@ namespace GestionFichersApp
             this.GridContent.Children.Add(new TypeUserControl());
         }
 
+        private void ButtonModulepersonne_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.GridContent.Children.Count != 0)
+            {
+                if (this.GridContent.Children.OfType<ICrud>().First() is PersonneUserControl)
+                {
+                    return;
+                }
+            }
+            this.GridContent.Children.Clear();
+            this.GridContent.Children.Add(new PersonneUserControl());
+        }
+
         private void ButtonAdd_Click(object sender, RoutedEventArgs e)
         {
             // On vérifie qu'il y a bien un module dans la zone
@@ -84,5 +97,7 @@ namespace GestionFichersApp
                 }
             }
         }
+
+
     }
 }

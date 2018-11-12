@@ -18,36 +18,34 @@ using System.Windows.Shapes;
 namespace GestionFichersApp.UserControls
 {
     /// <summary>
-    /// Logique d'interaction pour TypeUserControl.xaml
+    /// Logique d'interaction pour PersonneUserControl.xaml
     /// </summary>
-    public partial class TypeUserControl : UserControl, ICrud
+    public partial class PersonneUserControl : UserControl, ICrud
     {
-        #region Constructors
-        public TypeUserControl()
+        public PersonneUserControl()
         {
             InitializeComponent();
             LoadOrReloadData();
         }
-        #endregion
 
         #region Functions
         public void LoadOrReloadData()
         {
-            this.DataGridContenu.ItemsSource = Databases.GestionFichersDatabase.Current.Type.ToList();
-            this.DataGridContenu.Items.Refresh();
+            this.DataGridContenuPersonne.ItemsSource = Databases.GestionFichersDatabase.Current.Personne.ToList();
+            this.DataGridContenuPersonne.Items.Refresh();
         }
         #endregion
 
         #region Implemented func
         public void Create()
         {
-            TypeWindow window = new TypeWindow();
+            PersonneWindow window = new PersonneWindow();
             window.ShowDialog();
             if (window.DialogResult.HasValue && window.DialogResult.Value == true)
             {
-                Databases.Type objectToAdd = window.DataContext as Databases.Type;
+                Databases.Personne objectToAdd = window.DataContext as Databases.Personne;
 
-                Databases.GestionFichersDatabase.Current.Type.Add(objectToAdd);
+                Databases.GestionFichersDatabase.Current.Personne.Add(objectToAdd);
                 try
                 {
                     Databases.GestionFichersDatabase.Current.SaveChanges();
@@ -67,13 +65,13 @@ namespace GestionFichersApp.UserControls
 
         public void Delete()
         {
-            if (DataGridContenu.SelectedItems != null && DataGridContenu.SelectedItems.Count == 1)
+            if (DataGridContenuPersonne.SelectedItems != null && DataGridContenuPersonne.SelectedItems.Count == 1)
             {
-                Databases.Type TypeASupprimer = DataGridContenu.SelectedItem as Databases.Type;
+                Databases.Personne TypeASupprimer = DataGridContenuPersonne.SelectedItem as Databases.Personne;
 
-                if(MessageBox.Show("Etes vous sur de vouloir supprimer ?", "Supp", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Etes vous sur de vouloir supprimer ?", "Supp", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
-                    Databases.GestionFichersDatabase.Current.Type.Remove(TypeASupprimer);
+                    Databases.GestionFichersDatabase.Current.Personne.Remove(TypeASupprimer);
                     try
                     {
                         Databases.GestionFichersDatabase.Current.SaveChanges();
@@ -94,10 +92,10 @@ namespace GestionFichersApp.UserControls
 
         public void Update()
         {
-            if (DataGridContenu.SelectedItems != null && DataGridContenu.SelectedItems.Count == 1)
+            if (DataGridContenuPersonne.SelectedItems != null && DataGridContenuPersonne.SelectedItems.Count == 1)
             {
-                Databases.Type TypeAEditer = DataGridContenu.SelectedItem as Databases.Type;
-                TypeWindow fenetre = new TypeWindow(TypeAEditer);
+                Databases.Personne TypeAEditer = DataGridContenuPersonne.SelectedItem as Databases.Personne;
+                PersonneWindow fenetre = new PersonneWindow(TypeAEditer);
                 fenetre.ShowDialog();
                 if (fenetre.DialogResult.HasValue && fenetre.DialogResult.Value == true)
                 {
@@ -125,5 +123,40 @@ namespace GestionFichersApp.UserControls
         }
         #endregion
 
+        private void DataGridContenuPersonne_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Update();
+        }
+
+        private void DataGridContenuPersonne_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                if (DataGridContenuPersonne.SelectedItems != null && DataGridContenuPersonne.SelectedItems.Count == 1)
+                {
+                    Databases.Personne TypeASupprimer = DataGridContenuPersonne.SelectedItem as Databases.Personne;
+
+                    if (MessageBox.Show("Etes vous sur de vouloir supprimer ?", "Supp", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                    {
+                        Databases.GestionFichersDatabase.Current.Personne.Remove(TypeASupprimer);
+                        try
+                        {
+                            Databases.GestionFichersDatabase.Current.SaveChanges();
+                        }
+                        catch (Exception)
+                        {
+                            MessageBox.Show("La supp a raté");
+                            Databases.GestionFichersDatabase.ReinitializeDatabase();
+                        }
+                        LoadOrReloadData();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Veuillez sélectionner un et un seul élément.");
+                }
+            }
+
+        }
     }
 }

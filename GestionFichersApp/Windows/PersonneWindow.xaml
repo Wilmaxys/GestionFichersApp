@@ -1,0 +1,124 @@
+﻿<Window x:Class="GestionFichersApp.Windows.PersonneWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GestionFichersApp.Windows"
+        mc:Ignorable="d"
+        Title="PersonneWindow" SizeToContent="WidthAndHeight">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="15"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="5"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="5"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.Children>
+                <StackPanel Orientation="Vertical" Grid.Column="1" Grid.Row="1">
+                    <Grid Margin="0,0,0,15">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.Children>
+                            <TextBlock Grid.Column="0" Grid.Row="0" x:Name="TextBlockNom">Nom:</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="0" x:Name="TextBoxNom" Text="{Binding Nom}"></TextBox>
+                        </Grid.Children>
+                    </Grid>
+                    <Grid Margin="0,0,0,15">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.Children>
+                            <TextBlock Grid.Column="0" Grid.Row="0" x:Name="TextBlockPrenom">Prenom:</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="0" x:Name="TextBoxPrenom" Text="{Binding Prenom}"></TextBox>
+                        </Grid.Children>
+                    </Grid>
+                    <Grid Margin="0,0,0,15">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.Children>
+                            <TextBlock Grid.Column="0" Grid.Row="0" x:Name="TextBlockDate">Date:</TextBlock>
+                            <DatePicker Grid.Column="1" Grid.Row="0" x:Name="DPDate" SelectedDate="{Binding Path=DateDeNaissance, Mode=TwoWay}"></DatePicker>
+                        </Grid.Children>
+                    </Grid>
+                    <Grid Margin="0,0,0,15">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.Children>
+                            <TextBlock Grid.Column="0" Grid.Row="0" x:Name="TextBlockUserLogin">UserLogin:</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="0" x:Name="TextBoxUserLogin" Text="{Binding UserLogin}"></TextBox>
+                        </Grid.Children>
+                    </Grid>
+                    <Grid Margin="0,0,0,15">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.Children>
+                            <TextBlock Grid.Column="0" Grid.Row="0" x:Name="TextBlockMotDePasse">MotDePasse:</TextBlock>
+                            <TextBox Grid.Column="1" Grid.Row="0" x:Name="TextBoxMotDePasse" Text="{Binding MotDePasse}"></TextBox>
+                        </Grid.Children>
+                    </Grid>
+                    <Grid Margin="0,0,0,15">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.Children>
+                            <TextBlock Grid.Column="0" Grid.Row="0" x:Name="TextBlockIsAdministrateur">IsAdministrateur:</TextBlock>
+                            <CheckBox Grid.Column="1" Grid.Row="0" x:Name="CBXIsAdministrateur" IsChecked="{Binding IsAdministrateur}"></CheckBox>
+                        </Grid.Children>
+                    </Grid>
+                </StackPanel>
+                
+                <Grid Grid.Column="1" Grid.Row="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="100"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="100"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.Children>
+                        <Button Grid.Column="1" Grid.Row="0" Click="OkButton_Click">Ok</Button>
+                        <Button Grid.Column="3" Grid.Row="0" Click="CancelButton_Click">Cancel</Button>
+                    </Grid.Children>
+                </Grid>
+            </Grid.Children>
+        </Grid>
+    </Grid>
+</Window>
