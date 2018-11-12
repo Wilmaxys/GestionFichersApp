@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="GestionFichiersModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Fichier">
+          <Key>
+            <PropertyRef Name="Identifiant" />
+          </Key>
+          <Property Name="Identifiant" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="255" />
+          <Property Name="Chemin" Type="nvarchar" MaxLength="255" />
+          <Property Name="Type" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Personne">
+          <Key>
+            <PropertyRef Name="Identifiant" />
+          </Key>
+          <Property Name="Identifiant" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar" MaxLength="255" />
+          <Property Name="Prenom" Type="nvarchar" MaxLength="255" />
+          <Property Name="DateDeNaissance" Type="datetime" />
+          <Property Name="UserLogin" Type="nvarchar" MaxLength="255" />
+          <Property Name="MotDePasse" Type="nvarchar" MaxLength="255" />
+          <Property Name="IsAdministrateur" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PersonneFichier">
+          <Key>
+            <PropertyRef Name="Personne" />
+            <PropertyRef Name="Fichier" />
+          </Key>
+          <Property Name="Personne" Type="bigint" Nullable="false" />
+          <Property Name="Fichier" Type="bigint" Nullable="false" />
+          <Property Name="DateLecture" Type="datetime" />
+          <Property Name="Note" Type="int" />
+          <Property Name="Commentaire" Type="text" />
+        </EntityType>
+        <EntityType Name="Type">
+          <Key>
+            <PropertyRef Name="Identifiant" />
+          </Key>
+          <Property Name="Identifiant" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Libelle" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <Association Name="FK_FichierType">
+          <End Role="Type" Type="Self.Type" Multiplicity="0..1" />
+          <End Role="Fichier" Type="Self.Fichier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type">
+              <PropertyRef Name="Identifiant" />
+            </Principal>
+            <Dependent Role="Fichier">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonneFichierFichier">
+          <End Role="Fichier" Type="Self.Fichier" Multiplicity="1" />
+          <End Role="PersonneFichier" Type="Self.PersonneFichier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fichier">
+              <PropertyRef Name="Identifiant" />
+            </Principal>
+            <Dependent Role="PersonneFichier">
+              <PropertyRef Name="Fichier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonneFichierPersonne">
+          <End Role="Personne" Type="Self.Personne" Multiplicity="1" />
+          <End Role="PersonneFichier" Type="Self.PersonneFichier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personne">
+              <PropertyRef Name="Identifiant" />
+            </Principal>
+            <Dependent Role="PersonneFichier">
+              <PropertyRef Name="Personne" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GestionFichiersModelStoreContainer">
+          <EntitySet Name="Fichier" EntityType="Self.Fichier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Personne" EntityType="Self.Personne" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PersonneFichier" EntityType="Self.PersonneFichier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Type" EntityType="Self.Type" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_FichierType" Association="Self.FK_FichierType">
+            <End Role="Type" EntitySet="Type" />
+            <End Role="Fichier" EntitySet="Fichier" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonneFichierFichier" Association="Self.FK_PersonneFichierFichier">
+            <End Role="Fichier" EntitySet="Fichier" />
+            <End Role="PersonneFichier" EntitySet="PersonneFichier" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonneFichierPersonne" Association="Self.FK_PersonneFichierPersonne">
+            <End Role="Personne" EntitySet="Personne" />
+            <End Role="PersonneFichier" EntitySet="PersonneFichier" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GestionFichiersModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Fichier">
+          <Key>
+            <PropertyRef Name="Identifiant" />
+          </Key>
+          <Property Name="Identifiant" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Chemin" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="Int64" />
+          <NavigationProperty Name="Type1" Relationship="Self.FK_FichierType" FromRole="Fichier" ToRole="Type" />
+          <NavigationProperty Name="PersonneFichier" Relationship="Self.FK_PersonneFichierFichier" FromRole="Fichier" ToRole="PersonneFichier" />
+        </EntityType>
+        <EntityType Name="Personne">
+          <Key>
+            <PropertyRef Name="Identifiant" />
+          </Key>
+          <Property Name="Identifiant" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Prenom" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DateDeNaissance" Type="DateTime" Precision="3" />
+          <Property Name="UserLogin" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MotDePasse" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="IsAdministrateur" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="PersonneFichier" Relationship="Self.FK_PersonneFichierPersonne" FromRole="Personne" ToRole="PersonneFichier" />
+        </EntityType>
+        <EntityType Name="PersonneFichier">
+          <Key>
+            <PropertyRef Name="Personne" />
+            <PropertyRef Name="Fichier" />
+          </Key>
+          <Property Name="Personne" Type="Int64" Nullable="false" />
+          <Property Name="Fichier" Type="Int64" Nullable="false" />
+          <Property Name="DateLecture" Type="DateTime" Precision="3" />
+          <Property Name="Note" Type="Int32" />
+          <Property Name="Commentaire" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Fichier1" Relationship="Self.FK_PersonneFichierFichier" FromRole="PersonneFichier" ToRole="Fichier" />
+          <NavigationProperty Name="Personne1" Relationship="Self.FK_PersonneFichierPersonne" FromRole="PersonneFichier" ToRole="Personne" />
+        </EntityType>
+        <EntityType Name="Type">
+          <Key>
+            <PropertyRef Name="Identifiant" />
+          </Key>
+          <Property Name="Identifiant" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Libelle" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Fichier" Relationship="Self.FK_FichierType" FromRole="Type" ToRole="Fichier" />
+        </EntityType>
+        <Association Name="FK_FichierType">
+          <End Role="Type" Type="Self.Type" Multiplicity="0..1" />
+          <End Role="Fichier" Type="Self.Fichier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type">
+              <PropertyRef Name="Identifiant" />
+            </Principal>
+            <Dependent Role="Fichier">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonneFichierFichier">
+          <End Role="Fichier" Type="Self.Fichier" Multiplicity="1" />
+          <End Role="PersonneFichier" Type="Self.PersonneFichier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fichier">
+              <PropertyRef Name="Identifiant" />
+            </Principal>
+            <Dependent Role="PersonneFichier">
+              <PropertyRef Name="Fichier" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonneFichierPersonne">
+          <End Role="Personne" Type="Self.Personne" Multiplicity="1" />
+          <End Role="PersonneFichier" Type="Self.PersonneFichier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Personne">
+              <PropertyRef Name="Identifiant" />
+            </Principal>
+            <Dependent Role="PersonneFichier">
+              <PropertyRef Name="Personne" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GestionFichiersEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Fichier" EntityType="Self.Fichier" />
+          <EntitySet Name="Personne" EntityType="Self.Personne" />
+          <EntitySet Name="PersonneFichier" EntityType="Self.PersonneFichier" />
+          <EntitySet Name="Type" EntityType="Self.Type" />
+          <AssociationSet Name="FK_FichierType" Association="Self.FK_FichierType">
+            <End Role="Type" EntitySet="Type" />
+            <End Role="Fichier" EntitySet="Fichier" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonneFichierFichier" Association="Self.FK_PersonneFichierFichier">
+            <End Role="Fichier" EntitySet="Fichier" />
+            <End Role="PersonneFichier" EntitySet="PersonneFichier" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonneFichierPersonne" Association="Self.FK_PersonneFichierPersonne">
+            <End Role="Personne" EntitySet="Personne" />
+            <End Role="PersonneFichier" EntitySet="PersonneFichier" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GestionFichiersModelStoreContainer" CdmEntityContainer="GestionFichiersEntities">
+          <EntitySetMapping Name="Fichier">
+            <EntityTypeMapping TypeName="GestionFichiersModel.Fichier">
+              <MappingFragment StoreEntitySet="Fichier">
+                <ScalarProperty Name="Identifiant" ColumnName="Identifiant" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Chemin" ColumnName="Chemin" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Personne">
+            <EntityTypeMapping TypeName="GestionFichiersModel.Personne">
+              <MappingFragment StoreEntitySet="Personne">
+                <ScalarProperty Name="Identifiant" ColumnName="Identifiant" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+                <ScalarProperty Name="DateDeNaissance" ColumnName="DateDeNaissance" />
+                <ScalarProperty Name="UserLogin" ColumnName="UserLogin" />
+                <ScalarProperty Name="MotDePasse" ColumnName="MotDePasse" />
+                <ScalarProperty Name="IsAdministrateur" ColumnName="IsAdministrateur" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PersonneFichier">
+            <EntityTypeMapping TypeName="GestionFichiersModel.PersonneFichier">
+              <MappingFragment StoreEntitySet="PersonneFichier">
+                <ScalarProperty Name="Personne" ColumnName="Personne" />
+                <ScalarProperty Name="Fichier" ColumnName="Fichier" />
+                <ScalarProperty Name="DateLecture" ColumnName="DateLecture" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Commentaire" ColumnName="Commentaire" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Type">
+            <EntityTypeMapping TypeName="GestionFichiersModel.Type">
+              <MappingFragment StoreEntitySet="Type">
+                <ScalarProperty Name="Identifiant" ColumnName="Identifiant" />
+                <ScalarProperty Name="Libelle" ColumnName="Libelle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

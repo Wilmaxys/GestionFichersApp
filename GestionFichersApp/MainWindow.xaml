@@ -1,0 +1,39 @@
+﻿<Window x:Class="GestionFichersApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GestionFichersApp"
+        mc:Ignorable="d"
+        Title="MainWindow" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="100*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.Children>
+            <Menu Grid.Column="0" Grid.Row="0">
+                <MenuItem Header="Actions">
+                    <MenuItem Header="Ajouter" x:Name="ButtonAdd" Click="ButtonAdd_Click"></MenuItem>
+                    <MenuItem Header="Modifier" x:Name="ButtonEdit" Click="ButtonEdit_Click"></MenuItem>
+                    <MenuItem Header="Supprimer" x:Name="ButtonDelete" Click="ButtonDelete_Click"></MenuItem>
+                    <MenuItem Header="Quitter" Click="BoutonQuitter_Click"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="Modules">
+                    <MenuItem Header="Fichiers"></MenuItem>
+                    <MenuItem Header="Personnes"></MenuItem>
+                    <MenuItem Header="Types de fichiers" x:Name="ButonModuleType" Click="ButonModuleType_Click"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="?">
+                    <MenuItem Header="A propos"></MenuItem>
+                </MenuItem>
+            </Menu>
+            <Grid Grid.Column="0" Grid.Row="1" x:Name="GridContent">
+
+            </Grid>
+        </Grid.Children>
+    </Grid>
+</Window>
